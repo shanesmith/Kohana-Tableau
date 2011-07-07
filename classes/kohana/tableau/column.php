@@ -82,6 +82,131 @@ class Kohana_Tableau_Column {
 		$this->attributes = array( 'class' => (isset($class) ? $class : $key) );
 	}
 
+	/***************************
+	 **  Setters and Getters  **
+	 ***************************/
+
+	/**
+	 * Get the reference back to Tableau
+	 *
+	 * @return Tableau
+	 */
+	public function getTable() {
+		return $this->table;
+	}
+
+	/**
+	 * Set the column's title
+	 *
+	 * @param string $title
+	 * @return Kohana_Tableau_Column
+	 */
+	public function setTitle($title) {
+		$this->title = $title;
+		return $this;
+	}
+
+	/**
+	 * Get the column's title
+	 *
+	 * @return string
+	 */
+	public function getTitle() {
+		return $this->title;
+	}
+
+	/**
+	 * Set whether the columns should be automatically htmlspecialchars() escaped
+	 *
+	 * @param boolean $escaped
+	 * @return Kohana_Tableau_Column
+	 */
+	public function setEscaped($escaped) {
+		$this->escape = (bool)$escaped;
+		return $this;
+	}
+
+	/**
+	 * Whether the columns is automatically htmlspecialchars() escaped
+	 *
+	 * @return bool
+	 */
+	public function isEscaped() {
+		return (bool)$this->escape;
+	}
+
+	/**
+	 * Set the key for this column
+	 *
+	 * @param string $key
+	 * @return Kohana_Tableau_Column
+	 */
+	public function setKey($key) {
+		$this->key = $key;
+		return $this;
+	}
+
+	/**
+	 * Get the key for this column
+	 *
+	 * @return string
+	 */
+	public function getKey() {
+		return $this->key;
+	}
+
+	/**
+	 * Set an attribute for this columns
+	 *
+	 * @param string $key
+	 * @param string $value
+	 * @return Kohana_Tableau_Column
+	 */
+	public function setAttribute($key, $value) {
+		$this->attributes[$key] = $value;
+		return $this;
+	}
+
+	/**
+	 * Set attributes by using an array
+	 *
+	 * @param array $array
+	 * @return Kohana_Tableau_Column
+	 */
+	public function setAttributesArray(array $array) {
+		$this->attributes = array_merge($this->attributes, $array);
+		return $this;
+	}
+
+	/**
+	 * Get a specific attribute
+	 *
+	 * @param string $key
+	 * @return string
+	 */
+	public function getAttribute($key) {
+		return $this->attributes[$key];
+	}
+
+	/**
+	 * Get the full array of attributes
+	 *
+	 * @return array
+	 */
+	public function getAllAttributes() {
+		return $this->attributes;
+	}
+
+	/**
+	 * Append a class
+	 *
+	 * @param string $class
+	 * @return Kohana_Tableau_Column
+	 */
+	public function addClass($class) {
+		$this->setAttribute('class', $this->getAttribute('class') . " " . $class);
+		return $this;
+	}
 
 	/****************
 	 **  Callback  **
