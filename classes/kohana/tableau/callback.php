@@ -31,6 +31,7 @@ class Kohana_Tableau_Callback {
 	public static $maxlength      = array( "Tableau_Callback", "_maxlength" );
 	public static $is_empty       = array( "Tableau_Callback", "_is_empty");
 	public static $str_replace    = array( "Tableau_Callback", "_str_replace");
+	public static $implode        = array( "Tableau_Callback", "_implode");
 
 	/**
 	 * Tableau HTML ELEMENT callbacks
@@ -207,6 +208,18 @@ class Kohana_Tableau_Callback {
 	 */
 	public static function _str_replace($cell, $search, $replace) {
 		$cell->content = str_replace($search, $replace, $cell->content);
+		return $cell;
+	}
+
+	/**
+	 * Runs the implode() php method on the cell content
+	 *
+	 * @param Tableau_HTML_Cell $cell
+	 * @param string $glue
+	 * @return Tableau_HTML_Cell
+	 */
+	public static function _implode($cell, $glue="") {
+		$cell->content = implode($glue, $cell->content);
 		return $cell;
 	}
 
