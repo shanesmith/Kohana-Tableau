@@ -363,7 +363,7 @@ class Kohana_Tableau {
 	 * @return array
 	 */
 	public function getTBodyRows() {
-		if (empty($this->data)) return "";
+		if (empty($this->data)) return array();
 
 		$rows = array();
 
