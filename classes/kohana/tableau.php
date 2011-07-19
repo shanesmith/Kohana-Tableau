@@ -53,6 +53,20 @@ class Kohana_Tableau {
 	 */
 	protected $render_tfoot = true;
 
+	/**
+	 * Additional rows to prepend to the regular row
+	 *
+	 * @var array
+	 */
+	protected $thead_rows_prepend = array();
+
+	/**
+	 * Additional rows to append to the regular row
+	 *
+	 * @var array
+	 */
+	protected $thead_rows_append = array();
+
 
 	/*******************
 	 **  Constructor  **
@@ -190,6 +204,27 @@ class Kohana_Tableau {
 		return $this;
 	}
 
+	/**
+	 * Append a row (string) to the regular title row
+	 *
+	 * @param string $row
+	 * @return Kohana_Tableau
+	 */
+	public function appendTHeadRow($row) {
+		$this->thead_rows_append[] = $row;
+		return $this;
+	}
+
+	/**
+	 * Prepend a row (string) to the regular title row
+	 *
+	 * @param string $row
+	 * @return Kohana_Tableau
+	 */
+	public function prependTHeadRow($row) {
+		$this->thead_rows_prepend[] = $row;
+		return $this;
+	}
 
 	/************
 	 **  Data  **
@@ -342,18 +377,27 @@ class Kohana_Tableau {
 
 		$data_cells = array();
 
+		// if this table has row titles, include an empty cell to start
 		if (!empty($this->row_titles)) {
 			$data_cells[] = new Tableau_HTML_Th($this, 0, 0, null, '', array());
 		}
 
+		// collect the cells for main title row
 		$index = 0;
-
 		foreach ($this->columns as $col) {
 			$data_cells[] = $col->th($index++, 0);
 		}
 
+		// add prepended rows
+		$rows = array_merge($rows, $this->thead_rows_prepend);
+
+		// add main title row
 		$rows[] = new Tableau_HTML_Tr($this, 0, $data_cells);
 
+		// add appended rows
+		$rows = array_merge($rows, $this->thead_rows_append);
+
+		// return it!
 		return $rows;
 	}
 
