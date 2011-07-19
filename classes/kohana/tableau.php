@@ -263,6 +263,9 @@ class Kohana_Tableau {
 		if ($data instanceof Database_Result) {
 			$data = $data->as_array();
 		}
+		elseif ($data instanceof ORM) {
+			$data = $data->find_all();
+		}
 		$this->data = $data;
 		return $this;
 	}
