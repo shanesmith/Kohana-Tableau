@@ -169,6 +169,23 @@ class Kohana_Tableau {
 	public function getColumn($key) {
 		return $this->columns[$key];
 	}
+	
+	/**
+	 * Add a callback to a column, shortcut for getColumn()->addCallback()
+	 *
+	 * @param string $column
+	 * @param callable $callback
+	 * @param mixed $arguments,...
+	 * @return Tableau
+	 */
+	public function addCallback($column, $callback, $arguments=null) {
+		$callback_and_arguments = func_get_args();
+		array_shift($callback_and_arguments);
+		
+		call_user_func_array(array($this->getColumn($column), 'addCallback'), $callback_and_arguments);
+		
+		return $this;
+	}
 
 
 	/************
