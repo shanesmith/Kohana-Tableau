@@ -45,13 +45,6 @@ abstract class Kohana_Tableau_HTML_Element {
 	}
 
 	/**
-	 * Get the element's View
-	 *
-	 * @return View
-	 */
-	abstract public function getView();
-
-	/**
 	 * Add the given class
 	 *
 	 * @param string $class
@@ -67,9 +60,7 @@ abstract class Kohana_Tableau_HTML_Element {
 	 *
 	 * @return string
 	 */
-	public function render() {
-		return $this->getView()->render();
-	}
+	abstract public function render();
 
 	/**
 	 * Magic!

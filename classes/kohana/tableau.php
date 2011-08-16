@@ -169,7 +169,7 @@ class Kohana_Tableau {
 	public function getColumn($key) {
 		return $this->columns[$key];
 	}
-	
+
 	/**
 	 * Add a callback to a column, shortcut for getColumn()->addCallback()
 	 *
@@ -181,9 +181,9 @@ class Kohana_Tableau {
 	public function addCallback($column, $callback, $arguments=null) {
 		$callback_and_arguments = func_get_args();
 		array_shift($callback_and_arguments);
-		
+
 		call_user_func_array(array($this->getColumn($column), 'addCallback'), $callback_and_arguments);
-		
+
 		return $this;
 	}
 
@@ -470,54 +470,53 @@ class Kohana_Tableau {
 	 *
 	 * @return array
 	 */
-	public function getFooterRows() {
+	public function getTFootRows() {
 		return array();
 	}
 
 	/**
-	 * Get the View for THead
+	 * Get the HTML Table class
 	 *
-	 * @return View
+	 * If no columns are defined they will be automatically
+	 * determined by using all keys of the first row of data.
+	 *
+	 * @return Tableau_HTML_Table
 	 */
-	public function getTHeadView() {
-		return View::factory('tableau/thead', array(
-			'rows' => $this->getTHeadRows()
-		));
+	public function getTable() {
+		if (empty($this->columns)) {
+			$this->addColumnsArray(array_keys(current($this->data)));
+		}
+
+		return new Tableau_HTML_Table($this, array(),
+			$this->getTHead(), $this->getTBody(), $this->getTFoot()
+		);
 	}
 
 	/**
-	 * Get the View for TFoot
+	 * Get the HTML THead class
 	 *
-	 * @return View
+	 * @return Tableau_HTML_THead
 	 */
-	public function getTBodyView() {
-		return View::factory('tableau/tbody', array(
-			'rows' => $this->getTBodyRows()
-		));
+	public function getTHead() {
+		return new Tableau_HTML_THead($this, $this->getTHeadRows());
 	}
 
 	/**
-	 * Get the View for TFoot
+	 * Get the HTML TBody class
 	 *
-	 * @return View
+	 * @return Tableau_HTML_TBody
 	 */
-	public function getTFootView() {
-		return View::factory('tableau/tfoot', array(
-			'rows' => $this->getFooterRows()
-		));
+	public function getTBody() {
+		return new Tableau_HTML_TBody($this, $this->getTBodyRows());
 	}
 
 	/**
-	 * Get the full table View
+	 * Get the HTML TFoot class
 	 *
-	 * @return View
+	 * @return Tableau_HTML_TFoot
 	 */
-	public function getView() {
-		return View::factory('tableau/table', array(
-			'thead'  => $this->render_thead ? $this->getTHeadView() : "",
-			'tbody'  => $this->getTBodyView(),
-			'tfoot'  => $this->render_tfoot ? $this->getTFootView() : ""
-		));
+	public function getTFoot() {
+		return new Tableau_HTML_TFoot($this, $this->getTFootRows());
 	}
 
 	/**
@@ -529,13 +528,7 @@ class Kohana_Tableau {
 	 * @return string
 	 */
 	public function render() {
-		if (empty($this->columns)) {
-			$this->addColumnsArray(array_keys(current($this->data)));
-		}
-
-		$table = $this->getView()->render();
-
-		return $table;
+		return $this->getTable()->render();
 	}
 
 	/**

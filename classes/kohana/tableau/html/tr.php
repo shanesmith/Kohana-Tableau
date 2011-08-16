@@ -30,14 +30,17 @@ class Kohana_Tableau_HTML_Tr extends Tableau_HTML_Element {
 	}
 
 	/**
-	 * Get the TR View
+	 * Get the rendered HTML TR
 	 *
-	 * @return View
+	 * @return string
 	 */
-	public function getView() {
-		return View::factory('tableau/tr', array( 'tr' => $this ));
+	public function render() {
+		$tr = "<tr " . HTML::attributes($this->attributes) . ">";
+		foreach ($this->cells as $cell) {
+			$tr .= $cell->render();
+		}
+		$tr .= "</tr>";
+		return $tr;
 	}
-
-
 
 }

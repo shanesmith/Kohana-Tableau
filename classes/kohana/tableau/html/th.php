@@ -11,12 +11,12 @@
 class Kohana_Tableau_HTML_Th extends Tableau_HTML_Cell {
 
 	/**
-	 * Get the TH view
+	 * Get the rendered HTML TH
 	 *
-	 * @return View
+	 * @return string
 	 */
-	public function getView() {
-		return View::factory('tableau/th', array( 'th' => $this ));
+	public function render() {
+		return "<th " . HTML::attributes($this->attributes) . ">" . $this->content . "</th>";
 	}
 
 }
