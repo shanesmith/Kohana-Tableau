@@ -3,7 +3,7 @@
 /**
  * Tableau
  *
- * A Kohana 3.1 module for quick table making.
+ * A Kohana 3.x module for quick table making.
  *
  *
  * @package Tableau

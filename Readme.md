@@ -1,7 +1,7 @@
 Tableau Kohana Module
 =====================
 
-*Tableau (pronounced Tabloh) is a Kohana 3.1 module for quick html table creation from data arrays.*
+*Tableau (pronounced Tabloh) is a Kohana 3.x (and maybe under?) module for quick html table creation from data arrays.*
 
 
 Simple Example
