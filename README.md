@@ -21,3 +21,11 @@ Documentation
 -------------
 
 For more documentation please see the bundled user guide.
+
+
+License
+-------
+
+This module is licensed under the MIT license.
+
+Please see the LICENSE file for the full license.
